@@ -28,16 +28,16 @@ const LampOptions = (props) => {
     const selectedLampId = props.selectedLampIdProps;
 
 
-    useEffect(() => {
-        axios.get(urls.bridgeIP + 'api/' + urls.password + '/lights/' + selectedLampId)
-            .then(res => {
-                setCurrentLampState(res.data.state.on);
-                setCurrentBrightness(res.data.state.bri);
-            })
-            .catch(err => {
-                console.log(err)
-            });
-    }, [])
+    // useEffect(() => {
+    //     axios.get(urls.bridgeIP + 'api/' + urls.password + '/lights/' + selectedLampId)
+    //         .then(res => {
+    //             setCurrentLampState(res.data.state.on);
+    //             setCurrentBrightness(res.data.state.bri);
+    //         })
+    //         .catch(err => {
+    //             console.log(err)
+    //         });
+    // }, [])
 
     //onclick for toggle light button
     const handleLightToggle = () => {

@@ -12,23 +12,23 @@ const LightButtons = (props) => {
     const [currentLamp1State, setCurrentLamp1State] = useState();
     const [currentLamp2State, setCurrentLamp2State] = useState();
 
-    useEffect(() => {
-        axios.get(urls.bridgeIP + 'api/' + urls.password + '/lights/1')
-            .then(res => {
-                setCurrentLamp1State(res.data.state.on);
-            })
-            .catch(err => {
-                console.log(err)
-            });
-        axios.get(urls.bridgeIP + 'api/' + urls.password + '/lights/2')
-            .then(res => {
-                setCurrentLamp2State(res.data.state.on);
-            })
-            .catch(err => {
-                console.log(err)
-            })
+    // useEffect(() => {
+    //     axios.get(urls.bridgeIP + 'api/' + urls.password + '/lights/1')
+    //         .then(res => {
+    //             setCurrentLamp1State(res.data.state.on);
+    //         })
+    //         .catch(err => {
+    //             console.log(err)
+    //         });
+    //     axios.get(urls.bridgeIP + 'api/' + urls.password + '/lights/2')
+    //         .then(res => {
+    //             setCurrentLamp2State(res.data.state.on);
+    //         })
+    //         .catch(err => {
+    //             console.log(err)
+    //         })
 
-    })
+    // })
 
     //method to switch the className of button 1
     const handleClassNameLight1 = () => {
