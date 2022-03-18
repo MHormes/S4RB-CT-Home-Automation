@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from './LightButtons.module.css';
 import axios from "axios";
-import * as urls from "../URL"
+import * as varb from "../Variables"
 
 const LightButtons = (props) => {
     //state for button 1 pressed
@@ -13,14 +13,14 @@ const LightButtons = (props) => {
     const [currentLamp2State, setCurrentLamp2State] = useState();
 
     // useEffect(() => {
-    //     axios.get(urls.bridgeIP + 'api/' + urls.password + '/lights/1')
+    //     axios.get(varb.bridgeIP + 'api/' + varb.password + '/lights/1')
     //         .then(res => {
     //             setCurrentLamp1State(res.data.state.on);
     //         })
     //         .catch(err => {
     //             console.log(err)
     //         });
-    //     axios.get(urls.bridgeIP + 'api/' + urls.password + '/lights/2')
+    //     axios.get(varb.bridgeIP + 'api/' + varb.password + '/lights/2')
     //         .then(res => {
     //             setCurrentLamp2State(res.data.state.on);
     //         })

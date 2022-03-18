@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import styles from "./LampOptions.module.css"
 import axios from "axios";
 import toast, { Toaster } from 'react-hot-toast';
-import * as urls from "./../URL";
+import * as varb from "../Variables";
 
 
 const LampOptions = (props) => {
@@ -29,7 +29,7 @@ const LampOptions = (props) => {
 
 
     // useEffect(() => {
-    //     axios.get(urls.bridgeIP + 'api/' + urls.password + '/lights/' + selectedLampId)
+    //     axios.get(varb.bridgeIP + 'api/' + varb.password + '/lights/' + selectedLampId)
     //         .then(res => {
     //             setCurrentLampState(res.data.state.on);
     //             setCurrentBrightness(res.data.state.bri);
@@ -45,7 +45,7 @@ const LampOptions = (props) => {
             setPowerButtonState(powerButtonState + 1);
         }
         else {
-            axios.put(urls.bridgeIP + 'api/' + urls.password + '/lights/' + selectedLampId + '/state', { "on": !currentLampState })
+            axios.put(varb.bridgeIP + 'api/' + varb.password + '/lights/' + selectedLampId + '/state', { "on": !currentLampState })
                 .then(res => {
                     setCurrentLampState(!currentLampState);
                     toast.success("Light " + selectedLampId + " has been toggeled");
@@ -72,7 +72,7 @@ const LampOptions = (props) => {
             setDimButtonState(dimButtonState + 1);
         }
         else {
-            axios.put(urls.bridgeIP + 'api/' + urls.password + '/lights/' + selectedLampId + '/state', { "bri": currentBrightness - 50 })
+            axios.put(varb.bridgeIP + 'api/' + varb.password + '/lights/' + selectedLampId + '/state', { "bri": currentBrightness - 50 })
                 .then(res => {
                     setCurrentBrightness(currentBrightness - 50);
                     toast.success("Light " + selectedLampId + " has been dimmed");
@@ -100,7 +100,7 @@ const LampOptions = (props) => {
             setBrightButtonState(brightButtonState + 1);
         }
         else {
-            axios.put(urls.bridgeIP + 'api/' + urls.password + '/lights/' + selectedLampId + '/state', { "bri": currentBrightness + 50 })
+            axios.put(varb.bridgeIP + 'api/' + varb.password + '/lights/' + selectedLampId + '/state', { "bri": currentBrightness + 50 })
                 .then(res => {
                     console.log(res)
                     setCurrentBrightness(currentBrightness + 50);
@@ -131,7 +131,7 @@ const LampOptions = (props) => {
             let max = Math.floor(500);
             var whiteValue = Math.floor(Math.random() * (max - min + 1) + min);
 
-            axios.put(urls.bridgeIP + 'api/' + urls.password + '/lights/' + selectedLampId + '/state', { "ct": whiteValue })
+            axios.put(varb.bridgeIP + 'api/' + varb.password + '/lights/' + selectedLampId + '/state', { "ct": whiteValue })
             .then(res => {
                 console.log(res);
                 toast.success("Random white tint has been chosen")
@@ -157,7 +157,7 @@ const LampOptions = (props) => {
             setColorButtonState(colorButtonState + 1);
         }
         else {
-            // axios.put(urls.bridgeIP + 'api/' + urls.password + '/lights/' + selectedLampId + '/state', { "ct": whiteValue })
+            // axios.put(varb.bridgeIP + 'api/' + varb.password + '/lights/' + selectedLampId + '/state', { "ct": whiteValue })
             //     .then(res => {
             //         console.log(res);
             //     }).catch(err => {
@@ -190,7 +190,7 @@ const LampOptions = (props) => {
             max = Math.floor(240);
             var satValue = Math.floor(Math.random() * (max - min + 1) + min);
 
-            axios.put(urls.bridgeIP + 'api/' + urls.password + '/lights/' + selectedLampId + '/state', { "hue": colorValue, "sat": satValue })
+            axios.put(varb.bridgeIP + 'api/' + varb.password + '/lights/' + selectedLampId + '/state', { "hue": colorValue, "sat": satValue })
                 .then(res => {
                     console.log(res);
                     toast.success("Random color has been chosen");
@@ -216,7 +216,7 @@ const LampOptions = (props) => {
         }
         else {
             setBackButtonState(0);
-            window.location.href = urls.mainPage;
+            window.location.href = varb.mainPage;
         }
     }
 
