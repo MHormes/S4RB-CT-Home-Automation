@@ -4,25 +4,43 @@ import React, { useEffect, useState } from "react";
 
 const SocketSetup = () => {
 
+    const profileToLoad = "Maarten";
+
     const [webSocket, setWebSocket] = useState();
     const [headsetId, setHeadsetId] = useState();
     const [sessionId, setSessionId] = useState();
     const [cortexToken, setCortexToken] = useState();
 
+    //setup websocket on page load
     useEffect(() => {
         const ws = new WebSocket(varb.apiUrl);
         setWebSocket(ws);
+
+
+        //listen to data stream
+        ws.onmessage = (event) => {
+            try {
+                let data = JSON.parse(event.data);
+                if (data.id === 10) {
+                    console.log(data);
+                }
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }
+
     }, [])
 
 
     //check if user is logged in via the emotiv launcher
     const checkUserLogin = () => {
-        const request_access_id = 1;
+        const check_login_id = 1;
         let ws = webSocket;
 
         //check if user is logged in
         let userLoginCall = {
-            "id": request_access_id,
+            "id": check_login_id,
             "jsonrpc": "2.0",
             "method": "getUserLogin",
         }
@@ -31,7 +49,7 @@ const SocketSetup = () => {
         ws.onmessage = (event) => {
             try {
                 let data = JSON.parse(event.data);
-                if (data.id === request_access_id) {
+                if (data.id === check_login_id) {
                     if (data.currentOSUId === data.loggedInOSUId) {
                         console.log("user logged in")
                     } else {
@@ -47,12 +65,12 @@ const SocketSetup = () => {
 
     ///method to check if there is acces to bci data
     const checkAccessRight = () => {
-        const request_access_id = 2;
+        const check_access_id = 2;
         let ws = webSocket;
 
         //check if access has been granted
         let checkAccesCall = {
-            "id": request_access_id,
+            "id": check_access_id,
             "jsonrpc": "2.0",
             "method": "hasAccessRight",
             "params": {
@@ -65,8 +83,8 @@ const SocketSetup = () => {
         ws.onmessage = (event) => {
             try {
                 let data = JSON.parse(event.data);
-                if (data.id === request_access_id) {
-                    if (data.accessGranted === "true") {
+                if (data.id === check_access_id) {
+                    if (data.result.accessGranted === true) {
                         console.log("Access granted!")
                     } else {
                         console.log("Access needed")
@@ -183,8 +201,7 @@ const SocketSetup = () => {
             "method": "authorize",
             "params": {
                 "clientId": varb.clientId,
-                "clientSecret": varb.clientSecret,
-                "debit": 100
+                "clientSecret": varb.clientSecret
             }
         }
 
@@ -192,9 +209,77 @@ const SocketSetup = () => {
         ws.onmessage = (event) => {
             try {
                 let data = JSON.parse(event.data);
-                console.log(data);
                 if (data.id === request_token_id) {
                     setCortexToken(data.result.cortexToken)
+                    console.log(data.result.cortexToken)
+                }
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }
+    }
+
+    //method to check if a profile is selected
+    const checkCurrentProfile = () => {
+        const check_profile_id = 7;
+        let ws = webSocket;
+
+        //get the currently used training profile
+        let checkProfileCall = {
+            "id": check_profile_id,
+            "jsonrpc": "2.0",
+            "method": "getCurrentProfile",
+            "params": {
+                "cortexToken": cortexToken,
+                "headset": headsetId
+            }
+        }
+
+        ws.send(JSON.stringify(checkProfileCall))
+        ws.onmessage = (event) => {
+            try {
+                let data = JSON.parse(event.data);
+                if (data.id === check_profile_id) {
+                    if (data.result.name != null) {
+                        console.log("profile selected: " + data.result.name)
+                    } else {
+                        console.log("no profile selected yet")
+                    }
+                }
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }
+    }
+
+    //method to set a profile
+    const selectProfile = () => {
+        const select_profile_id = 8;
+        let ws = webSocket;
+
+        //set the used training profile
+        let selectProfileCall = {
+            "id": select_profile_id,
+            "jsonrpc": "2.0",
+            "method": "setupProfile",
+            "params": {
+                "cortexToken": cortexToken,
+                "headset": headsetId,
+                "profile": profileToLoad,
+                "status": "load"
+            }
+        }
+
+        ws.send(JSON.stringify(selectProfileCall))
+        ws.onmessage = (event) => {
+            try {
+                let data = JSON.parse(event.data);
+                if (data.id === select_profile_id) {
+                    if (data.result.action === "load") {
+                        console.log("profile selected successfully: " + data.result.name)
+                    }
                 }
             }
             catch (error) {
@@ -205,7 +290,7 @@ const SocketSetup = () => {
 
     //Start session for data streaming
     const createSession = () => {
-        const create_session_id = 7;
+        const create_session_id = 9;
         let ws = webSocket;
 
         //get cortex token for later use
@@ -224,8 +309,10 @@ const SocketSetup = () => {
         ws.onmessage = (event) => {
             try {
                 let data = JSON.parse(event.data);
+                console.log(data);
                 if (data.id === create_session_id) {
                     setSessionId(data.result.id)
+                    console.log("session successfully started")
                 }
             }
             catch (error) {
@@ -236,7 +323,7 @@ const SocketSetup = () => {
 
     //subscribe to channel that will stream mental commands
     const subscribe = () => {
-        const subscribe_id = 8;
+        const subscribe_id = 10;
         let ws = webSocket;
 
         //start session json
@@ -273,6 +360,8 @@ const SocketSetup = () => {
             <button onClick={() => queryHeadsets()}>Query the headset</button>
             <button onClick={() => controlHeadset()}>Request headset control</button>
             <button onClick={() => authorize()}>Get auth token</button>
+            <button onClick={() => checkCurrentProfile()}>Check current profile</button>
+            <button onClick={() => selectProfile()}>select profile</button>
             <button onClick={() => createSession()}>Start session</button>
             <button onClick={() => subscribe()}>subscribe to mental command streaming</button>
         </>
