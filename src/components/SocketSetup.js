@@ -14,9 +14,74 @@ const SocketSetup = () => {
         setWebSocket(ws);
     }, [])
 
+
+    //check if user is logged in via the emotiv launcher
+    const checkUserLogin = () => {
+        const request_access_id = 1;
+        let ws = webSocket;
+
+        //check if user is logged in
+        let userLoginCall = {
+            "id": request_access_id,
+            "jsonrpc": "2.0",
+            "method": "getUserLogin",
+        }
+
+        ws.send(JSON.stringify(userLoginCall))
+        ws.onmessage = (event) => {
+            try {
+                let data = JSON.parse(event.data);
+                if (data.id === request_access_id) {
+                    if (data.currentOSUId === data.loggedInOSUId) {
+                        console.log("user logged in")
+                    } else {
+                        console.log("Please login via the emotiv launcher")
+                    }
+                }
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }
+    }
+
+    ///method to check if there is acces to bci data
+    const checkAccessRight = () => {
+        const request_access_id = 2;
+        let ws = webSocket;
+
+        //check if access has been granted
+        let checkAccesCall = {
+            "id": request_access_id,
+            "jsonrpc": "2.0",
+            "method": "hasAccessRight",
+            "params": {
+                "clientId": varb.clientId,
+                "clientSecret": varb.clientSecret
+            }
+        }
+
+        ws.send(JSON.stringify(checkAccesCall))
+        ws.onmessage = (event) => {
+            try {
+                let data = JSON.parse(event.data);
+                if (data.id === request_access_id) {
+                    if (data.accessGranted === "true") {
+                        console.log("Access granted!")
+                    } else {
+                        console.log("Access needed")
+                    }
+                }
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }
+    }
+
     ///method to request access to the BCI data
     const requestAccess = () => {
-        const request_access_id = 1;
+        const request_access_id = 3;
         let ws = webSocket;
 
         //request access only called once ever
@@ -46,7 +111,7 @@ const SocketSetup = () => {
 
     //method to getl ist of connected headsets and set the id
     const queryHeadsets = () => {
-        const query_headset_id = 2;
+        const query_headset_id = 4;
         let ws = webSocket;
 
         //get list of headsets
@@ -78,7 +143,7 @@ const SocketSetup = () => {
 
     //method to make a connection with the headset. Needed to get data stream
     const controlHeadset = () => {
-        const control_device_id = 3;
+        const control_device_id = 5;
         let ws = webSocket;
 
         //connect to the headset
@@ -108,7 +173,7 @@ const SocketSetup = () => {
 
     //method to get cortex token for later usage
     const authorize = () => {
-        const request_token_id = 4;
+        const request_token_id = 6;
         let ws = webSocket;
 
         //get cortex token for later use
@@ -140,7 +205,7 @@ const SocketSetup = () => {
 
     //Start session for data streaming
     const createSession = () => {
-        const create_session_id = 5;
+        const create_session_id = 7;
         let ws = webSocket;
 
         //get cortex token for later use
@@ -171,7 +236,7 @@ const SocketSetup = () => {
 
     //subscribe to channel that will stream mental commands
     const subscribe = () => {
-        const subscribe_id = 6;
+        const subscribe_id = 8;
         let ws = webSocket;
 
         //start session json
@@ -202,6 +267,8 @@ const SocketSetup = () => {
 
     return (
         <>
+            <button onClick={() => checkUserLogin()}>Check for user login</button>
+            <button onClick={() => checkAccessRight()}>Check if access has been granted</button>
             <button onClick={() => requestAccess()}>Request access to Emotiv Launcher</button>
             <button onClick={() => queryHeadsets()}>Query the headset</button>
             <button onClick={() => controlHeadset()}>Request headset control</button>
