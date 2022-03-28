@@ -1,10 +1,8 @@
 //Methods used for ws connection. Used in the automated process.
 import * as varb from "./Variables";
 
-const webSocket = new WebSocket(varb.apiUrl);
-
 //check if user is logged in via the emotiv launcher
-export const checkUserLogin = async () => {
+export const checkUserLogin = async (webSocket) => {
     return new Promise(function (resolve, reject) {
         const check_login_id = 1;
         let ws = webSocket;
@@ -40,7 +38,7 @@ export const checkUserLogin = async () => {
 }
 
 ///method to check if there is acces to bci data
-export const checkAccessRight = () => {
+export const checkAccessRight = (webSocket) => {
     return new Promise(function (resolve, reject) {
         const check_access_id = 2;
         let ws = webSocket;
@@ -80,7 +78,7 @@ export const checkAccessRight = () => {
 }
 
 ///method to request access to the BCI data
-export const requestAccess = () => {
+export const requestAccess = (webSocket) => {
     const request_access_id = 3;
     let ws = webSocket;
 
@@ -110,7 +108,7 @@ export const requestAccess = () => {
 }
 
 //method to getl ist of connected headsets and set the id
-export const queryHeadsets = () => {
+export const queryHeadsets = (webSocket) => {
     return new Promise(function (resolve, reject) {
         const query_headset_id = 4;
         let ws = webSocket;
@@ -147,7 +145,7 @@ export const queryHeadsets = () => {
 }
 
 //method to make a connection with the headset. Needed to get data stream
-export const controlHeadset = (headsetId) => {
+export const controlHeadset = (webSocket, headsetId) => {
     return new Promise(function (resolve, reject) {
         const control_device_id = 5;
         let ws = webSocket;
@@ -188,7 +186,7 @@ export const controlHeadset = (headsetId) => {
 }
 
 //method to get cortex token for later usage
-export const authorize = () => {
+export const authorize = (webSocket) => {
     return new Promise(function (resolve, reject) {
         const request_token_id = 6;
         let ws = webSocket;
@@ -223,7 +221,7 @@ export const authorize = () => {
 }
 
 //method to check if a profile is selected
-export const checkCurrentProfile = (cortexToken, headsetId) => {
+export const checkCurrentProfile = (webSocket, cortexToken, headsetId) => {
     return new Promise(function (resolve, reject) {
         const check_profile_id = 7;
         let ws = webSocket;
@@ -263,7 +261,7 @@ export const checkCurrentProfile = (cortexToken, headsetId) => {
 }
 
 //method to set a profile
-export const selectProfile = (cortexToken, headsetId, profileToLoad) => {
+export const selectProfile = (webSocket, cortexToken, headsetId, profileToLoad) => {
     return new Promise(function (resolve, reject) {
         const select_profile_id = 8;
         let ws = webSocket;
@@ -302,7 +300,7 @@ export const selectProfile = (cortexToken, headsetId, profileToLoad) => {
 }
 
 //Start session for data streaming
-export const createSession = (cortexToken, headsetId) => {
+export const createSession = (webSocket, cortexToken, headsetId) => {
     return new Promise(function (resolve, reject) {
         const create_session_id = 9;
         let ws = webSocket;
@@ -344,7 +342,7 @@ export const createSession = (cortexToken, headsetId) => {
 }
 
 //subscribe to channel that will stream mental commands
-export const subscribe = (cortexToken, sessionId) => {
+export const subscribe = (webSocket, cortexToken, sessionId) => {
     const subscribe_id = 10;
     let ws = webSocket;
 
@@ -356,7 +354,7 @@ export const subscribe = (cortexToken, sessionId) => {
         "params": {
             "cortexToken": cortexToken,
             "session": sessionId,
-            "streams": ["com", "fac"]
+            "streams": ["com"] //["com", "fac"] for both
         }
     }
 

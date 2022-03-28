@@ -18,30 +18,47 @@ const SocketSetup = () => {
         setWebSocket(ws);
     }, [])
 
-    const automatedWSConnect = () => {
+    //This is what i talked about
+    webSocket.onmessage = (event) => {
+        try {
+            let data = JSON.parse(event.data);
+            if (typeof data.com != "undefined") {
+                if (data.com[0] != "neutral" && data.com[1] >= 0.5 ) {
+                    console.log(data.com);
+                }
+            }
 
-        methods.checkUserLogin().then(loginResult => {
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
+
+
+    const automatedWSConnect = () => {
+        methods.checkUserLogin(webSocket).then(loginResult => {
             if (loginResult === true) {
-                methods.checkAccessRight().then(accessResult => {
+                methods.checkAccessRight(webSocket).then(accessResult => {
                     if (accessResult === true) {
-                        methods.queryHeadsets().then(queryResult => {
+                        methods.queryHeadsets(webSocket).then(queryResult => {
                             setHeadsetId(queryResult);
-                            methods.controlHeadset(queryResult).then(controlResult => {
+                            methods.controlHeadset(webSocket, queryResult).then(controlResult => {
                                 if (controlResult === true) {
-                                    methods.authorize().then(authResult => {
+                                    methods.authorize(webSocket).then(authResult => {
                                         setCortexToken(authResult)
-                                        methods.checkCurrentProfile(authResult, queryResult).then(profileResult => {
+                                        methods.checkCurrentProfile(webSocket, authResult, queryResult).then(profileResult => {
                                             if (profileResult === true) {
-                                                methods.createSession(authResult, queryResult).then(sessionResult => {
+                                                methods.createSession(webSocket, authResult, queryResult).then(sessionResult => {
                                                     setSessionId(sessionResult)
-                                                    methods.subscribe(authResult, sessionResult);
+                                                    methods.subscribe(webSocket, authResult, sessionResult);
                                                 })
                                             } else {
-                                                methods.selectProfile(authResult, queryResult, profileToLoad).then(result => {
+                                                methods.selectProfile(webSocket, authResult, queryResult, profileToLoad).then(result => {
                                                     if (result === true) {
-                                                        methods.createSession(authResult, queryResult).then(sessionResult => {
+                                                        methods.createSession(webSocket, authResult, queryResult).then(sessionResult => {
                                                             setSessionId(sessionResult)
-                                                            methods.subscribe(authResult, sessionResult);
+                                                            methods.subscribe(webSocket, authResult, sessionResult);
                                                         })
                                                     }
                                                 })
