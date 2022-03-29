@@ -7,34 +7,28 @@ const SocketSetup = () => {
 
     const profileToLoad = "Maarten";
 
-    const [webSocket, setWebSocket] = useState();
+    const [webSocket, setWebSocket] = useState(new WebSocket(varb.apiUrl));
     const [headsetId, setHeadsetId] = useState();
     const [sessionId, setSessionId] = useState();
     const [cortexToken, setCortexToken] = useState();
 
-    //setup websocket on page load
-    useEffect(() => {
-        const ws = new WebSocket(varb.apiUrl);
-        setWebSocket(ws);
-    }, [])
 
-    //This is what i talked about
-    webSocket.onmessage = (event) => {
-        try {
-            let data = JSON.parse(event.data);
-            if (typeof data.com != "undefined") {
-                if (data.com[0] != "neutral" && data.com[1] >= 0.5 ) {
-                    console.log(data.com);
+    const dataStreamHandler = () => {
+        //On message for data stream of mental commands
+        webSocket.onmessage = (event) => {
+            try {
+                let data = JSON.parse(event.data);
+                if (typeof data.com !== "undefined") {
+                    if (data.com[0] !== "neutral" && data.com[1] >= 0.5) {
+                        console.log(data.com);
+                    }
                 }
             }
-
-        }
-        catch (error) {
-            console.log(error);
+            catch (error) {
+                console.log(error);
+            }
         }
     }
-
-
 
     const automatedWSConnect = () => {
         methods.checkUserLogin(webSocket).then(loginResult => {
@@ -52,6 +46,7 @@ const SocketSetup = () => {
                                                 methods.createSession(webSocket, authResult, queryResult).then(sessionResult => {
                                                     setSessionId(sessionResult)
                                                     methods.subscribe(webSocket, authResult, sessionResult);
+                                                    dataStreamHandler();
                                                 })
                                             } else {
                                                 methods.selectProfile(webSocket, authResult, queryResult, profileToLoad).then(result => {
@@ -59,18 +54,15 @@ const SocketSetup = () => {
                                                         methods.createSession(webSocket, authResult, queryResult).then(sessionResult => {
                                                             setSessionId(sessionResult)
                                                             methods.subscribe(webSocket, authResult, sessionResult);
+                                                            dataStreamHandler();
                                                         })
                                                     }
                                                 })
                                             }
-
                                         })
                                     })
-
                                 }
                             })
-
-
                         })
 
                     } else {
