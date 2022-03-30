@@ -207,8 +207,9 @@ export const authorize = (webSocket) => {
             try {
                 let data = JSON.parse(event.data);
                 if (data.id === request_token_id) {
-                    console.log("Cortex token received");
                     resolve(data.result.cortexToken);
+                    console.log("Cortex token received");
+
                 }
             }
             catch (error) {
@@ -322,14 +323,14 @@ export const createSession = (webSocket, cortexToken, headsetId) => {
             try {
                 let data = JSON.parse(event.data);
                 if (data.id === create_session_id) {
-                    if(typeof data.result != "undefined"){
+                    if (typeof data.result != "undefined") {
                         console.log("Session successfully started")
                         resolve(data.result.id);
-                    }else{
+                    } else {
                         console.log("Session not created")
                         console.log(data)
                     }
-                    
+
                 }
             }
             catch (error) {
@@ -342,7 +343,7 @@ export const createSession = (webSocket, cortexToken, headsetId) => {
 }
 
 //subscribe to channel that will stream mental commands
-export const subscribe = (webSocket, cortexToken, sessionId) => {
+export const subscribe = (subscribeStatus, webSocket, cortexToken, sessionId) => {
     const subscribe_id = 10;
     let ws = webSocket;
 
@@ -350,11 +351,11 @@ export const subscribe = (webSocket, cortexToken, sessionId) => {
     const subscribeCall = {
         "id": subscribe_id,
         "jsonrpc": "2.0",
-        "method": "subscribe",
+        "method": subscribeStatus,
         "params": {
             "cortexToken": cortexToken,
             "session": sessionId,
-            "streams": ["com"] //["com", "fac"] for both
+            "streams": ["com", "fac"] 
         }
     }
 
