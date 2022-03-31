@@ -1,5 +1,5 @@
 import styles from './MainContainer.module.css';
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import { Route, Routes } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 import LightButtons from './LightButtons';
@@ -14,13 +14,20 @@ const MainContainer = () => {
     const selectLamp = (id) => {
         setSelectedLampId(id);
         console.log(id);
-        navigate('/lampOptions')
+        navigate('/lampOptions');
     }
+
+    const sendCommand = (command) => {
+        command.printCommand();
+    }
+
+
 
     return (
         <>
-            <h1 className={styles.h1}>Philips hue connection web application</h1>
-            <SocketSetup />
+            <h1 className={styles.h1}>Freedom and independence for everyone!</h1>
+            <SocketSetup
+                sendCommandProps={sendCommand} />
             <Routes>
                 <Route exact path="/" element={<LightButtons
                     selectLampProps={selectLamp} />}>
