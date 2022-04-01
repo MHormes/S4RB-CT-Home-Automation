@@ -82,7 +82,7 @@ const SocketSetup = (props) => {
                         })
 
                     } else {
-                        wsMethods.requestAccess();
+                        wsMethods.requestAccess(webSocket);
                     }
                 })
             }

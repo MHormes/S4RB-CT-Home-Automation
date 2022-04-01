@@ -8,8 +8,7 @@ var smile = 0;
 var clench = 0;
 
 //timer for facial commands.
-//reset the counters to 0 every 0.5 seconds.
-//results in data output that is 'handelbaar'
+//reset the counters to 0 every second.
 const clearCounterFac = () => {
     winkL = 0;
     winkR = 0;
@@ -18,9 +17,25 @@ const clearCounterFac = () => {
     raise = 0;
     smile = 0;
     clench = 0;
-    //console.log("cleared");
-} 
+}
 setInterval(clearCounterFac, 1000);
+
+
+//counter values mental commands
+var left = 0;
+var right = 0;
+var up = 0;
+var down = 0;
+
+//timer for mental commands.
+//reset the counters to 0 every second.
+const clearCounterCom = () => {
+    left = 0;
+    right = 0;
+    up = 0;
+    down = 0;
+}
+setInterval(clearCounterCom, 1000);
 
 //method to split facial from mental commands
 export const filterCommand = (command) => {
@@ -92,9 +107,34 @@ const filterFac = (command) => {
 //command filter
 const filterCom = (command) => {
     switch (command.action) {
-        case "":
+        case "left":
+            left++;
+            if (left === 5) {
+                command.printCommand();
+                left = 0;
+            }
             break;
-        case "":
+        case "right":
+            right++;
+            if (right === 5) {
+                command.printCommand();
+                right = 0;
+            }
             break;
+        case "up":
+            up++;
+            if (up === 5) {
+                command.printCommand();
+                up = 0;
+            }
+            break;
+        case "down":
+            down++;
+            if (down === 5) {
+                command.printCommand();
+                down = 0;
+            }
+            break;
+
     }
 }
