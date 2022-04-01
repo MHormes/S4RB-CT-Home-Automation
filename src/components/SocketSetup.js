@@ -7,7 +7,7 @@ import React, { useState } from "react";
 const SocketSetup = (props) => {
 
     //Profile to load from the Emotiv BCI
-    const profileToLoad = "Maarten";
+    const profileToLoad = "Zonar";
 
     //state for all websocket values
     const [webSocket, setWebSocket] = useState(new WebSocket(varb.apiUrl));
@@ -63,6 +63,7 @@ const SocketSetup = (props) => {
                             methods.controlHeadset(webSocket, queryResult).then(controlResult => {
                                 if (controlResult === true) {
                                     methods.authorize(webSocket).then(authResult => {
+                                        console.log(authResult);
                                         setCortexToken(authResult)
                                         methods.checkCurrentProfile(webSocket, authResult, queryResult).then(profileResult => {
                                             if (profileResult === true) {
@@ -89,7 +90,7 @@ const SocketSetup = (props) => {
                         })
 
                     } else {
-                        methods.requestAccess();
+                        methods.requestAccess(webSocket);
                     }
                 })
             }

@@ -58,6 +58,7 @@ export const checkAccessRight = (webSocket) => {
         ws.onmessage = (event) => {
             try {
                 let data = JSON.parse(event.data);
+                console.log(data)
                 if (data.id === check_access_id) {
                     if (data.result.accessGranted === true) {
                         console.log("Access granted!")
@@ -198,7 +199,8 @@ export const authorize = (webSocket) => {
             "method": "authorize",
             "params": {
                 "clientId": varb.clientId,
-                "clientSecret": varb.clientSecret
+                "clientSecret": varb.clientSecret, 
+                "debit": 10
             }
         }
 
@@ -237,12 +239,13 @@ export const checkCurrentProfile = (webSocket, cortexToken, headsetId) => {
                 "headset": headsetId
             }
         }
-
+console.log(checkProfileCall);
         ws.send(JSON.stringify(checkProfileCall))
         ws.onmessage = (event) => {
             try {
                 let data = JSON.parse(event.data);
                 if (data.id === check_profile_id) {
+                    console.log(data);
                     if (data.result.name != null) {
                         console.log("profile selected: " + data.result.name)
                         resolve(true);
