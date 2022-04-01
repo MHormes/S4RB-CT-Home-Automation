@@ -198,7 +198,8 @@ export const authorize = (webSocket) => {
             "method": "authorize",
             "params": {
                 "clientId": varb.clientId,
-                "clientSecret": varb.clientSecret
+                "clientSecret": varb.clientSecret,
+                "debit": 100
             }
         }
 
@@ -237,7 +238,6 @@ export const checkCurrentProfile = (webSocket, cortexToken, headsetId) => {
                 "headset": headsetId
             }
         }
-
         ws.send(JSON.stringify(checkProfileCall))
         ws.onmessage = (event) => {
             try {

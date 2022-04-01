@@ -41,11 +41,9 @@ setInterval(clearCounterCom, 1000);
 export const filterCommand = (command) => {
     switch (command.type) {
         case "fac":
-            filterFac(command);
-            break;
+            return filterFac(command);
         case "com":
-            filterCom(command);
-            break;
+            return filterCom(command);
     }
 }
 
@@ -96,7 +94,7 @@ const filterFac = (command) => {
             break;
         case "clench":
             clench++;
-            if (clench === 10) {
+            if (clench === 5) {
                 command.printCommand();
                 clench = 0;
             }
@@ -110,29 +108,29 @@ const filterCom = (command) => {
         case "left":
             left++;
             if (left === 5) {
-                command.printCommand();
                 left = 0;
+                return "left";
             }
             break;
         case "right":
             right++;
             if (right === 5) {
-                command.printCommand();
                 right = 0;
+                return "left";
             }
             break;
         case "up":
             up++;
             if (up === 5) {
-                command.printCommand();
                 up = 0;
+                return "left";
             }
             break;
         case "down":
             down++;
             if (down === 5) {
-                command.printCommand();
                 down = 0;
+                return "left";
             }
             break;
 

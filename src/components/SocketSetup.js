@@ -25,7 +25,9 @@ const SocketSetup = (props) => {
                 //mental commands
                 if (typeof data.com !== "undefined") {
                     if (data.com[0] !== "neutral" && data.com[1] >= 0.5) {
-                        filterMethods.filterCommand(new Command("com", data.com[0], data.com[1]));
+                        if(filterMethods.filterCommand(new Command("com", data.com[0], data.com[1])) === true){
+                            console.log("actual command here")
+                        }
                     }
                 }
                 //Facial expressions
@@ -33,7 +35,6 @@ const SocketSetup = (props) => {
                     if (data.fac[0] !== "neutral") {
                         filterMethods.filterCommand(new Command("fac", data.fac[0], null));
                     } if (data.fac[1] !== "neutral" && data.fac[2] >= 0.5) {
-                        console.log(data);
                         filterMethods.filterCommand(new Command("fac", data.fac[1], data.fac[2]));
                     } if (data.fac[3] !== "neutral" && data.fac[4] >= 0.5) {
                         filterMethods.filterCommand(new Command("fac", data.fac[3], data.fac[4]));
