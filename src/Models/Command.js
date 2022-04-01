@@ -11,6 +11,6 @@ export default class Command {
     }
 
     printCommand(){
-        console.log(this.action + " / strength: " + this.strength);
+        console.log(this.action);
     }
 }
