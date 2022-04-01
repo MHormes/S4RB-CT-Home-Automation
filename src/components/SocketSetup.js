@@ -6,7 +6,7 @@ import React, { useState } from "react";
 
 
 const SocketSetup = (props) => {
-    
+
     //Profile to load from the Emotiv BCI
     const profileToLoad = "Maarten";
 
@@ -25,19 +25,29 @@ const SocketSetup = (props) => {
                 //mental commands
                 if (typeof data.com !== "undefined") {
                     if (data.com[0] !== "neutral" && data.com[1] >= 0.5) {
-                        if(filterMethods.filterCommand(new Command("com", data.com[0], data.com[1])) === true){
-                            console.log("actual command here")
+                        var filteredCom = filterMethods.filterCommand(new Command("com", data.com[0], data.com[1]));
+                        if (typeof filteredCom !== "undefined") {
+                            console.log("Command: " + filteredCom.action);
                         }
                     }
                 }
                 //Facial expressions
                 if (typeof data.fac !== "undefined") {
                     if (data.fac[0] !== "neutral") {
-                        filterMethods.filterCommand(new Command("fac", data.fac[0], null));
+                        var filteredFacEye = filterMethods.filterCommand(new Command("fac", data.fac[0], null));
+                        if (typeof filteredFacEye !== "undefined") {
+                            console.log("Command: " + filteredFacEye.action);
+                        }
                     } if (data.fac[1] !== "neutral" && data.fac[2] >= 0.5) {
-                        filterMethods.filterCommand(new Command("fac", data.fac[1], data.fac[2]));
+                        var filteredFacUp = filterMethods.filterCommand(new Command("fac", data.fac[1], data.fac[2]));
+                        if (typeof filteredFacUp !== "undefined") {
+                            console.log("Command: " + filteredFacUp.action);
+                        }
                     } if (data.fac[3] !== "neutral" && data.fac[4] >= 0.5) {
-                        filterMethods.filterCommand(new Command("fac", data.fac[3], data.fac[4]));
+                        var filteredFacDown = filterMethods.filterCommand(new Command("fac", data.fac[3], data.fac[4]));
+                        if (typeof filteredFacDown !== "undefined") {
+                            console.log("Command: " + filteredFacDown.action);
+                        }
                     }
                 }
             }

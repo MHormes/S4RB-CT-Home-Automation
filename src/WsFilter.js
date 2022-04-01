@@ -52,51 +52,51 @@ const filterFac = (command) => {
     switch (command.action) {
         case "winkL":
             winkL++;
-            if (winkL === 5) {
-                command.printCommand();
+            if (winkL === 10) {
                 winkL = 0;
+                return command;
             }
             break;
         case "winkR":
             winkR++;
-            if (winkR === 5) {
-                command.printCommand();
+            if (winkR === 10) {
                 winkR = 0;
+                return command;
             }
             break;
         case "blink":
             blink++;
-            if (blink === 5) {
-                command.printCommand();
+            if (blink === 10) {
                 blink = 0;
+                return command;
             }
             break;
         case "furrow":
             furrow++;
-            if (furrow === 5) {
-                command.printCommand();
+            if (furrow === 10) {
                 furrow = 0;
+                return command;
             }
             break;
         case "raise":
             raise++;
-            if (raise === 5) {
-                command.printCommand();
+            if (raise === 10) {
                 raise = 0;
+                return command;
             }
             break;
         case "smile":
             smile++;
-            if (smile === 5) {
-                command.printCommand();
+            if (smile === 10) {
                 smile = 0;
+                return command;
             }
             break;
         case "clench":
             clench++;
-            if (clench === 5) {
-                command.printCommand();
+            if (clench === 10) {
                 clench = 0;
+                return command;
             }
             break;
     }
@@ -109,28 +109,28 @@ const filterCom = (command) => {
             left++;
             if (left === 5) {
                 left = 0;
-                return "left";
+                return command;
             }
             break;
         case "right":
             right++;
             if (right === 5) {
                 right = 0;
-                return "left";
+                return command;
             }
             break;
         case "up":
             up++;
             if (up === 5) {
                 up = 0;
-                return "left";
+                return command;
             }
             break;
         case "down":
             down++;
             if (down === 5) {
                 down = 0;
-                return "left";
+                return command;
             }
             break;
 
