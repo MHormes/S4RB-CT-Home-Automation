@@ -22,7 +22,7 @@ const SocketSetup = (props) => {
         webSocket.onmessage = (event) => {
             try {
                 let data = JSON.parse(event.data);
-                //check eeg quality before actually triggering commands
+                //check eeg quality and set data stream enables value in maincontainer
                 if (typeof data.eq !== "undefined") {
                     if (data.eq[1] >= 96) {
                         props.toggleStreamProps(true);

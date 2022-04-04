@@ -12,13 +12,14 @@ const MainContainer = () => {
     const navigate = useNavigate();
 
     //Method to select a lamp and get its id value
-    const [selectedLampId, setSelectedLampId] = useState("1"); //hardcoded lamp ID for POCy
+    const [selectedLampId, setSelectedLampId] = useState("1"); //hardcoded lamp ID for POC
     const selectLamp = (id) => {
         setSelectedLampId(id);
         console.log(id);
         navigate('/lampOptions');
     }
 
+    //Enable or disable stream based on eeg quality
     const [streamEnabled, setStreamEnabled] = useState(false);
     const toggleStream = (value) => {
         setStreamEnabled(value);

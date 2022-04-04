@@ -19,30 +19,43 @@ const SingleLightToggle = (props) => {
         //     });
         if (props.streamEnabledProps === true && typeof props.filteredCommandProps !== "undefined") {
             if (props.filteredCommandProps.action === "left") {
-                console.log("turn on");
+                handleLightOn();
             } else if (props.filteredCommandProps.action === "right") {
-                console.log("turn off")
+                handleLightOff();
             }
         }
 
     }, [props.filteredCommandProps])
 
-    //onclick for toggle light button
-    const handleLightToggle = () => {
-        axios.put(varb.bridgeIP + 'api/' + varb.password + '/lights/' + selectedLampId + '/state', { "on": !currentLampState })
-            .then(res => {
-                setCurrentLampState(!currentLampState);
-                toast.success("Light " + selectedLampId + " has been toggeled");
-            }).catch(err => {
-                console.log(err);
-            });
+    //onclick for turn on light
+    const handleLightOn = () => {
+        console.log("turn on");
+        // axios.put(varb.bridgeIP + 'api/' + varb.password + '/lights/' + selectedLampId + '/state', { "on": true })
+        //     .then(res => {
+        //         setCurrentLampState(!currentLampState);
+        //         toast.success("Light " + selectedLampId + " has been turned on");
+        //     }).catch(err => {
+        //         console.log(err);
+        //     });
     }
 
+    //onclick for turn off light
+    const handleLightOff = () => {
+        console.log("turn of");
+        // axios.put(varb.bridgeIP + 'api/' + varb.password + '/lights/' + selectedLampId + '/state', { "on": false })
+        //     .then(res => {
+        //         setCurrentLampState(!currentLampState);
+        //         toast.success("Light " + selectedLampId + " has been turned off");
+        //     }).catch(err => {
+        //         console.log(err);
+        //     });
+    }
     return (
         <div>
             <p className={styles.p1}>The lamp is currently turned {currentLampState ? "on" : "off"}</p>
             <br />
-            <button onClick={() => handleLightToggle()}>Toggle the light</button>
+            <button onClick={() => handleLightOn()}>Turn on the light</button>
+            <button onClick={() => handleLightOff()}>Turn off the light</button>
             <Toaster />
         </div>
     )
