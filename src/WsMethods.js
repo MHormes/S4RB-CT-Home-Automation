@@ -355,7 +355,7 @@ export const subscribe = (subscribeStatus, webSocket, cortexToken, sessionId) =>
         "params": {
             "cortexToken": cortexToken,
             "session": sessionId,
-            "streams": ["com", "fac"]
+            "streams": ["com", "fac", "eq"]
         }
     }
 
