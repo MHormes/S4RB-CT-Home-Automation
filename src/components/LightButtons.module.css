@@ -13,16 +13,45 @@
     background-color: rgba(241, 97, 60, 0.89);
 }
 
+body{
+
+        margin: 0;
+        width: 100%;
+        height: 100vh;
+        flex-direction: row;    
+        justify-content: center;
+        align-items: top;
+        background: #202125;
+    }
+
 .buttonSecond {
-    width: 10vw;
-    height: 10vw;
-    margin: 25px;
-    border-radius: 20px;
-    background-color: rgba(233, 53, 7, 0.89);
+    
+    text-align: center;
+    font-family: 'Arial';
+    width: 171px;
+    height: 90px;
+    border: none;
+    color: #fff;
+    background: #3A3A3A;
+    cursor: pointer;
+    border-radius: 10px;
+    padding-top: 5px;
+    padding-bottom: 15px;
+    margin-top: 10px;
+    
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 
 .h1 {
     text-align: center;
     font-size: 24px;
     color: white;
+}
+
+.container{
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }

@@ -76,10 +76,15 @@ const LightButtons = (props) => {
 
     return (
         <>
+         <div className="button">
             <p className={styles.h1}>Start by selecting the light you want to control</p>
             <button name="light1Button" className={handleClassNameLight1()} onClick={() => handleLight1()}>Light 1 is currently turned {currentLamp1State ? "on" : "off"}</button>
             <button name="light2Button" className={handleClassNameLight2()} onClick={() => handleLight2()}>Light 2 is currently turned {currentLamp2State ? "on" : "off"}</button>
-
+            <button name="light1Button" className={handleClassNameLight1()} onClick={() => handleLight1()}>Light 1 is currently turned {currentLamp1State ? "on" : "off"}</button>
+            <button name="light1Button" className={handleClassNameLight1()} onClick={() => handleLight1()}>Light 1 is currently turned {currentLamp1State ? "on" : "off"}</button>
+            <button name="light1Button" className={handleClassNameLight1()} onClick={() => handleLight1()}>Light 1 is currently turned {currentLamp1State ? "on" : "off"}</button>
+            
+            </div>
         </>
     )
 }

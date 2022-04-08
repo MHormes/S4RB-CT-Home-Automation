@@ -8,7 +8,7 @@ import React, { useState } from "react";
 const SocketSetup = (props) => {
     
     //Profile to load from the Emotiv BCI
-    const profileToLoad = "Maarten";
+    const profileToLoad = "Zonar";
 
     //state for all websocket values
     const [webSocket, setWebSocket] = useState(new WebSocket(varb.apiUrl));
@@ -27,7 +27,7 @@ const SocketSetup = (props) => {
                     if (data.com[0] !== "neutral" && data.com[1] >= 0.5) {
                         if(filterMethods.filterCommand(new Command("com", data.com[0], data.com[1])) === true){
                             console.log("actual command here")
-                        }
+                        }   
                     }
                 }
                 //Facial expressions

@@ -24,7 +24,7 @@ const MainContainer = () => {
 
 
     return (
-        <>
+        <> 
             <h1 className={styles.h1}>Freedom and independence for everyone!</h1>
             <SocketSetup
                 sendCommandProps={sendCommand} />
@@ -36,10 +36,10 @@ const MainContainer = () => {
                     selectedLampIdProps={selectedLampId} />}>
                 </Route>
             </Routes>
-
-
         </>
+        
     )
 }
 
 export default MainContainer
+

@@ -233,7 +233,7 @@ const LampOptions = (props) => {
 
     return (
         <div>
-            <p className={styles.p1}>Please select what you want to do with Lamp {selectedLampId}</p>
+            <p className={styles.p1}>Use the Mental {selectedLampId}</p>
             <br />
             <p className={styles.p1}>The lamp is currently turned {currentLampState ? "on" : "off"}</p>
             <br />
