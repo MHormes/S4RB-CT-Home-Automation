@@ -6,7 +6,7 @@ import React, { useState } from "react";
 
 
 const SocketSetup = (props) => {
-    
+
     //Profile to load from the Emotiv BCI
     const profileToLoad = "Zonar";
 
@@ -22,22 +22,43 @@ const SocketSetup = (props) => {
         webSocket.onmessage = (event) => {
             try {
                 let data = JSON.parse(event.data);
+                //check eeg quality and set data stream enables value in maincontainer
+                if (typeof data.eq !== "undefined") {
+                    if (data.eq[1] >= 96) {
+                        props.toggleStreamProps(true);
+                    }
+                    else{
+                        props.toggleStreamProps(false);
+                    }
+                }
+
                 //mental commands
                 if (typeof data.com !== "undefined") {
                     if (data.com[0] !== "neutral" && data.com[1] >= 0.5) {
-                        if(filterMethods.filterCommand(new Command("com", data.com[0], data.com[1])) === true){
-                            console.log("actual command here")
-                        }   
+                        //If command is triggered return the filteredCom and send to main container
+                        var filteredCom = filterMethods.filterCommand(new Command("com", data.com[0], data.com[1]));
+                        if (typeof filteredCom !== "undefined") {
+                            props.sendCommandProps(filteredCom);
+                        }
                     }
                 }
                 //Facial expressions
                 if (typeof data.fac !== "undefined") {
                     if (data.fac[0] !== "neutral") {
-                        filterMethods.filterCommand(new Command("fac", data.fac[0], null));
+                        var filteredFacEye = filterMethods.filterCommand(new Command("fac", data.fac[0], null));
+                        if (typeof filteredFacEye !== "undefined") {
+                            props.sendCommandProps(filteredFacEye);
+                        }
                     } if (data.fac[1] !== "neutral" && data.fac[2] >= 0.5) {
-                        filterMethods.filterCommand(new Command("fac", data.fac[1], data.fac[2]));
+                        var filteredFacUp = filterMethods.filterCommand(new Command("fac", data.fac[1], data.fac[2]));
+                        if (typeof filteredFacUp !== "undefined") {
+                            props.sendCommandProps(filteredFacUp);
+                        }
                     } if (data.fac[3] !== "neutral" && data.fac[4] >= 0.5) {
-                        filterMethods.filterCommand(new Command("fac", data.fac[3], data.fac[4]));
+                        var filteredFacDown = filterMethods.filterCommand(new Command("fac", data.fac[3], data.fac[4]));
+                        if (typeof filteredFacDown !== "undefined") {
+                            props.sendCommandProps(filteredFacDown);
+                        }
                     }
                 }
             }
