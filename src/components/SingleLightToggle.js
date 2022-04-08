@@ -10,13 +10,13 @@ const SingleLightToggle = (props) => {
     const [currentLampState, setCurrentLampState] = useState();
 
     useEffect(() => {
-        // axios.get(varb.bridgeIP + 'api/' + varb.password + '/lights/' + selectedLampId)
-        //     .then(res => {
-        //         setCurrentLampState(res.data.state.on);
-        //     })
-        //     .catch(err => {
-        //         console.log(err)
-        //     });
+        axios.get(varb.bridgeIP + 'api/' + varb.password + '/lights/' + selectedLampId)
+            .then(res => {
+                setCurrentLampState(res.data.state.on);
+            })
+            .catch(err => {
+                console.log(err)
+            });
         if (props.streamEnabledProps === true && typeof props.filteredCommandProps !== "undefined") {
             if (props.filteredCommandProps.action === "left") {
                 handleLightOn();
@@ -30,25 +30,25 @@ const SingleLightToggle = (props) => {
     //onclick for turn on light
     const handleLightOn = () => {
         console.log("turn on");
-        // axios.put(varb.bridgeIP + 'api/' + varb.password + '/lights/' + selectedLampId + '/state', { "on": true })
-        //     .then(res => {
-        //         setCurrentLampState(!currentLampState);
-        //         toast.success("Light " + selectedLampId + " has been turned on");
-        //     }).catch(err => {
-        //         console.log(err);
-        //     });
+        axios.put(varb.bridgeIP + 'api/' + varb.password + '/lights/' + selectedLampId + '/state', { "on": true })
+            .then(res => {
+                setCurrentLampState(!currentLampState);
+                toast.success("Light " + selectedLampId + " has been turned on");
+            }).catch(err => {
+                console.log(err);
+            });
     }
 
     //onclick for turn off light
     const handleLightOff = () => {
-        console.log("turn of");
-        // axios.put(varb.bridgeIP + 'api/' + varb.password + '/lights/' + selectedLampId + '/state', { "on": false })
-        //     .then(res => {
-        //         setCurrentLampState(!currentLampState);
-        //         toast.success("Light " + selectedLampId + " has been turned off");
-        //     }).catch(err => {
-        //         console.log(err);
-        //     });
+        console.log("turn off");
+        axios.put(varb.bridgeIP + 'api/' + varb.password + '/lights/' + selectedLampId + '/state', { "on": false })
+            .then(res => {
+                setCurrentLampState(!currentLampState);
+                toast.success("Light " + selectedLampId + " has been turned off");
+            }).catch(err => {
+                console.log(err);
+            });
     }
     return (
         <div>

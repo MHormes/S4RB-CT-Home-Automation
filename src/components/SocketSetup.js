@@ -24,7 +24,7 @@ const SocketSetup = (props) => {
                 let data = JSON.parse(event.data);
                 //check eeg quality and set data stream enables value in maincontainer
                 if (typeof data.eq !== "undefined") {
-                    if (data.eq[1] >= 96) {
+                    if (data.eq[1] >= 90) {
                         props.toggleStreamProps(true);
                     }
                     else{
