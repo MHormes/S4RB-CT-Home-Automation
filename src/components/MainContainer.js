@@ -33,7 +33,7 @@ const MainContainer = () => {
 
     return (
         <>
-            <h1 className={styles.h1}>Freedom and independence for everyone!</h1>
+            <h1 className={styles.h1}>Neural Home!</h1>
             <SocketSetup
                 sendCommandProps={sendCommand}
                 toggleStreamProps={toggleStream} />
