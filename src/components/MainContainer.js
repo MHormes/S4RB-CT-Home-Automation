@@ -12,7 +12,7 @@ const MainContainer = () => {
     const navigate = useNavigate();
 
     //Method to select a lamp and get its id value
-    const [selectedLampId, setSelectedLampId] = useState("2"); //hardcoded lamp ID for POC
+    const [selectedLampId, setSelectedLampId] = useState("1"); //hardcoded lamp ID for POC
     const selectLamp = (id) => {
         setSelectedLampId(id);
         console.log(id);

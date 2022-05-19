@@ -8,7 +8,7 @@ import React, { useState } from "react";
 const SocketSetup = (props) => {
 
     //Profile to load from the Emotiv BCI
-    const profileToLoad = "Maarten";
+    const profileToLoad = "Zonar";
 
     //state for all websocket values
     const [webSocket, setWebSocket] = useState(new WebSocket(varb.apiUrl));
