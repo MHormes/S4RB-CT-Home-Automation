@@ -10,5 +10,3 @@ The Emotiv Epoc-x headset was used in combination with the Emotiv headset, to ga
 could be mapped to a command, which we used to control the home automation devices.
 
 More information is available, feel free to contact me :)
-
-maarten.hormes@gmail.com
